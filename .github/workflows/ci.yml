@@ -1,0 +1,79 @@
+---
+name: Pre-commit checks, build and test Docker image, upload PDFs to GitHub Pages, create GitHub release
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['*']
+  workflow_dispatch:
+
+env:
+  OUTPUT_DIR: public
+  OUTPUT_ARTIFACTS_NAME: pdf
+  SOURCE_ARTIFACTS_NAME: source
+
+jobs:
+  pre_commit:
+    name: Pre-commit checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pre-commit/action@v3.0.1
+      - uses: pre-commit-ci/lite-action@v1.0.3
+        if: always()
+
+  render:
+    name: Render PDFs
+    needs: pre_commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Render with testing Docker image
+        run: >
+          docker container run
+          -v "${PWD}:/data"
+          --user "$(id -u):$(id -g)"
+          kadykov/typst-cv:0.3.0
+
+      - name: Upload rendered PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.OUTPUT_ARTIFACTS_NAME }}
+          path: ./*.pdf
+          if-no-files-found: error
+
+  release:
+    name: Create a GitHub release
+    needs: render
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get tag name
+        id: tag_name
+        run: echo "tag_name=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Download rendered PDFs
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.OUTPUT_ARTIFACTS_NAME }}
+          path: ${{ env.OUTPUT_DIR }}/
+
+      - name: Create release on GitHub
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_name.outputs.tag_name }}
+          body: job-description.md
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: ${{ env.OUTPUT_DIR }}/*.pdf

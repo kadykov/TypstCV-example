@@ -1,0 +1,26 @@
+{
+  "name": "Typst-CV-private",
+  "image": "kadykov/typst-cv:0.3.0",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/kadykov/devcontainer-features/pre-commit:1": {},
+    "ghcr.io/lukewiwa/features/shellcheck:0": {}
+  },
+  "postCreateCommand": "pre-commit install",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "skellock.just",
+        "GitHub.vscode-github-actions",
+        "eamodio.gitlens"
+      ]
+    }
+  }
+}
