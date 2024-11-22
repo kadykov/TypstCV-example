@@ -2,6 +2,8 @@
 
 # Research Engineer in THz Time-Domain Spectroscopy
 
+[Link to the job description](https://github.com/kadykov/typstCV)
+
 ## Job Summary
 
 We are seeking a highly skilled Research Engineer

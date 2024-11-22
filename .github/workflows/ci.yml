@@ -70,7 +70,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
-          body: job-description.md
+          bodyFile: job-description.md
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: ${{ env.OUTPUT_DIR }}/*.pdf
