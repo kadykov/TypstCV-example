@@ -60,11 +60,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Get tag name
-        id: tag_name
-        run: echo "tag_name=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
-        shell: bash
-
       - name: Download rendered PDFs
         uses: actions/download-artifact@v4
         with:
@@ -74,7 +69,7 @@ jobs:
       - name: Create release on GitHub
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ steps.tag_name.outputs.tag_name }}
+          tag: ${{ github.ref_name }}
           body: job-description.md
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
