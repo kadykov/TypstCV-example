@@ -12,8 +12,10 @@ private-args := '--input EMAIL="$EMAIL" --input PHONE="$PHONE"'
 
 build-public:
   mkdir -p {{output-dir}}
-  {{pandoc}} \
+  pandoc --to markdown \
   {{filename}}-{{cv}}-{{language}}.md \
+  --include-after-body {{filename}}-after-{{cv}}-{{language}}.md \
+  | {{pandoc}} \
   --include-in-header {{filename}}-{{cv}}-{{language}}.yml \
   -o {{output-dir}}/{{filename}}-{{cv}}-{{language}}.pdf \
   --template=typst-{{cv}}.typ
@@ -25,8 +27,10 @@ build-public:
 
 build:
   mkdir -p {{output-dir}}
-  {{pandoc}} \
+  pandoc --to markdown \
   {{filename}}-{{cv}}-{{language}}.md \
+  --include-after-body {{filename}}-after-{{cv}}-{{language}}.md \
+  | {{pandoc}} \
   --include-in-header {{filename}}-{{cv}}-{{language}}.yml \
   --template=typst-{{cv}}.typ \
   {{pandoc-to-typst}} \
@@ -60,4 +64,6 @@ prompt:
   --include-after-body prompt-{{job-description}}-{{language}}.md \
   --include-after-body prompt-instructions-{{cv}}-{{language}}.md \
   -o {{output-dir}}/prompt-output.md
-  rm prompt-{{letter}}-{{language}}.md
+  rm \
+  prompt-{{letter}}-{{language}}.md \
+  prompt-{{job-description}}-{{language}}.md
