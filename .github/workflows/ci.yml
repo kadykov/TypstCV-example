@@ -37,6 +37,8 @@ jobs:
         run: >
           docker container run
           -v "${PWD}:/data"
+          --env PHONE=${{ secrets.PHONE }}
+          --env EMAIL=${{ secrets.EMAIL }}
           --user "$(id -u):$(id -g)"
           kadykov/typst-cv:0.3.0
 
