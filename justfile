@@ -2,6 +2,7 @@ set dotenv-load
 filename := "kadykov"
 cv := "cv"
 letter := "letter"
+job-description := "job-description"
 language := "en"
 output-dir := "."
 typst := "typst compile"
@@ -37,3 +38,19 @@ build:
 
 build-private:
   just build
+
+prompt:
+  mkdir -p {{output-dir}}
+  pandoc --strip-comments --wrap=none \
+  {{filename}}-{{letter}}-{{language}}.md \
+  -o prompt-{{letter}}-{{language}}.md
+  pandoc --strip-comments --wrap=none \
+  {{filename}}-{{cv}}-{{language}}.md \
+  --include-before-body prompt-before-{{cv}}-{{language}}.md \
+  --include-after-body prompt-before-{{letter}}-{{language}}.md \
+  --include-after-body {{filename}}-{{letter}}-{{language}}.md \
+  --include-after-body prompt-before-{{job-description}}-{{language}}.md \
+  --include-after-body {{job-description}}.md \
+  --include-after-body prompt-instructions-{{cv}}-{{language}}.md \
+  -o {{output-dir}}/prompt-output.md
+  rm prompt-{{letter}}-{{language}}.md
