@@ -12,8 +12,7 @@ private-args := '--input EMAIL="$EMAIL" --input PHONE="$PHONE"'
 
 
 build:
-  just english
-  just french
+  just english-private
 
 build-private:
   just english-private
