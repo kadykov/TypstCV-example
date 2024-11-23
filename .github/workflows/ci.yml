@@ -1,5 +1,5 @@
 ---
-name: Pre-commit checks, build and test Docker image, upload PDFs to GitHub Pages, create GitHub release
+name: Pre-commit checks, render PDFs, create GitHub release
 
 on:
   pull_request:

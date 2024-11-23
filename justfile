@@ -51,12 +51,15 @@ prompt:
   mkdir -p {{output-dir}}
   pandoc --strip-comments --wrap=none \
   {{filename}}-{{letter}}-{{language}}.md \
+  --lua-filter clean.lua \
   -o prompt-{{letter}}-{{language}}.md
   pandoc --strip-comments --wrap=none \
   {{job-description}}.md \
+  --lua-filter clean.lua \
   -o prompt-{{job-description}}-{{language}}.md
   pandoc --strip-comments --wrap=none \
   {{filename}}-{{cv}}-{{language}}.md \
+  --lua-filter clean.lua \
   --include-before-body prompt-before-{{cv}}-{{language}}.md \
   --include-after-body prompt-before-{{letter}}-{{language}}.md \
   --include-after-body prompt-{{letter}}-{{language}}.md \
