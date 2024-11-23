@@ -10,7 +10,7 @@ applied and basic research
 in THz photonics
 and
 magnetotransport
-in 2D~materials.
+in 2D&nbsp;materials.
 
 # Core competencies {.hidden}
 
@@ -141,7 +141,7 @@ I2S Doctorlal School
 at the University of Montpellier
 & L2C
 
-### Ph.D.~in Solid State Physics {date="Sep.~2014 \\ Dec.~2017"}
+### Ph.D. in Solid State Physics {date="Sep.~2014 \\ Dec.~2017"}
 
 Thesis:
 [

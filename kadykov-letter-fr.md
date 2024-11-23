@@ -11,7 +11,7 @@ magnetotransport,
 mesures de haute précision,
 et technologie THz.
 
-## Photonique et Magnetotransport au L2C et IPM~RAS
+## Photonique et Magnetotransport au L2C et&nbsp;IPM&nbsp;RAS
 
 J'ai commencé ma carrière dans la recherche fondamentale
 en tant qu'Ingénieur de Recherche.
@@ -19,7 +19,7 @@ en tant qu'Ingénieur de Recherche.
 Mon travail de thèse,
 une collaboration entre
 le Laboratoire Charles Coulomb (L2C)
-et l'Institut de Physique des Microstructures (IPM~RAS),
+et l'Institut de Physique des Microstructures (IPM&nbsp;RAS),
 portait sur la photonique et le magnetotransport
 dans des puits quantiques HgTe/HgCdTe.
 
@@ -29,7 +29,7 @@ des émetteurs et détecteurs pour l'infrarouge lointain,
 ou des isolants topologiques
 avec des états de bord protégés.
 <!--  -->
-À l'IPM~RAS,
+À l'IPM&nbsp;RAS,
 j'ai étudié leur potentiel
 en tant qu'émetteurs et détecteurs pour l'infrarouge lointain,
 en utilisant

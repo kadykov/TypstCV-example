@@ -11,6 +11,8 @@ pandoc-to-typst := "--to=typst | typst compile -"
 pandoc-clean := "pandoc --strip-comments --wrap=none --lua-filter clean.lua"
 private-args := '--input EMAIL="$EMAIL" --input PHONE="$PHONE"'
 
+alias build := build-private
+
 build-public:
   mkdir -p {{output-dir}}
   pandoc --to markdown \
@@ -26,7 +28,7 @@ build-public:
   -o {{output-dir}}/{{filename}}-{{letter}}-{{language}}.pdf \
   --template=typst-{{letter}}.typ
 
-build:
+build-private:
   mkdir -p {{output-dir}}
   pandoc --to markdown \
   {{filename}}-{{cv}}-{{language}}.md \
@@ -44,9 +46,6 @@ build:
   {{pandoc-to-typst}} \
   {{output-dir}}/{{filename}}-{{letter}}-{{language}}.pdf \
   {{private-args}}
-
-build-private:
-  just build
 
 prompt TARGET=cv:
   mkdir -p {{output-dir}}
