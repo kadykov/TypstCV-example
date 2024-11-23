@@ -47,7 +47,7 @@ build:
 build-private:
   just build
 
-prompt:
+prompt TARGET=cv:
   mkdir -p {{output-dir}}
   pandoc --strip-comments --wrap=none \
   {{filename}}-{{letter}}-{{language}}.md \
@@ -65,7 +65,7 @@ prompt:
   --include-after-body prompt-{{letter}}-{{language}}.md \
   --include-after-body prompt-before-{{job-description}}-{{language}}.md \
   --include-after-body prompt-{{job-description}}-{{language}}.md \
-  --include-after-body prompt-instructions-{{cv}}-{{language}}.md \
+  --include-after-body prompt-instructions-{{TARGET}}-{{language}}.md \
   -o {{output-dir}}/prompt-output.md
   rm \
   prompt-{{letter}}-{{language}}.md \
