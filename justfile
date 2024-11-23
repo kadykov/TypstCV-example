@@ -8,6 +8,7 @@ output-dir := "."
 typst := "typst compile"
 pandoc := "pandoc --data-dir=$PANDOC_DATA_DIR --wrap=preserve --pdf-engine=typst --lua-filter=linkify.lua --lua-filter=typst-cv.lua"
 pandoc-to-typst := "--to=typst | typst compile -"
+pandoc-clean := "pandoc --strip-comments --wrap=none --lua-filter clean.lua"
 private-args := '--input EMAIL="$EMAIL" --input PHONE="$PHONE"'
 
 build-public:
@@ -49,17 +50,14 @@ build-private:
 
 prompt TARGET=cv:
   mkdir -p {{output-dir}}
-  pandoc --strip-comments --wrap=none \
+  {{pandoc-clean}} \
   {{filename}}-{{letter}}-{{language}}.md \
-  --lua-filter clean.lua \
   -o prompt-{{letter}}-{{language}}.md
-  pandoc --strip-comments --wrap=none \
+  {{pandoc-clean}} \
   {{job-description}}.md \
-  --lua-filter clean.lua \
   -o prompt-{{job-description}}-{{language}}.md
-  pandoc --strip-comments --wrap=none \
+  {{pandoc-clean}} \
   {{filename}}-{{cv}}-{{language}}.md \
-  --lua-filter clean.lua \
   --include-before-body prompt-before-{{cv}}-{{language}}.md \
   --include-after-body prompt-before-{{letter}}-{{language}}.md \
   --include-after-body prompt-{{letter}}-{{language}}.md \
