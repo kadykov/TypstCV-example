@@ -11,24 +11,12 @@ pandoc-to-typst := "--to=typst | typst compile -"
 pandoc-clean := "pandoc --strip-comments --wrap=none --lua-filter clean.lua"
 private-args := '--input EMAIL="$EMAIL" --input PHONE="$PHONE"'
 
-alias build := build-private
+alias build-private := build
 
 build-public:
-  mkdir -p {{output-dir}}
-  pandoc --to markdown \
-  {{filename}}-{{cv}}-{{language}}.md \
-  --include-after-body {{filename}}-after-{{cv}}-{{language}}.md \
-  | {{pandoc}} \
-  --include-in-header {{filename}}-{{cv}}-{{language}}.yml \
-  -o {{output-dir}}/{{filename}}-{{cv}}-{{language}}.pdf \
-  --template=typst-{{cv}}.typ
-  {{pandoc}} \
-  {{filename}}-{{letter}}-{{language}}.md \
-  --include-in-header {{filename}}-{{letter}}-{{language}}.yml \
-  -o {{output-dir}}/{{filename}}-{{letter}}-{{language}}.pdf \
-  --template=typst-{{letter}}.typ
+  just build public
 
-build-private:
+build mode="private":
   mkdir -p {{output-dir}}
   pandoc --to markdown \
   {{filename}}-{{cv}}-{{language}}.md \
@@ -38,16 +26,16 @@ build-private:
   --template=typst-{{cv}}.typ \
   {{pandoc-to-typst}} \
   {{output-dir}}/{{filename}}-{{cv}}-{{language}}.pdf \
-  {{private-args}}
+  {{ if mode == "private" {private-args} else {""} }}
   {{pandoc}} \
   {{filename}}-{{letter}}-{{language}}.md \
   --include-in-header {{filename}}-{{letter}}-{{language}}.yml \
   --template=typst-{{letter}}.typ \
   {{pandoc-to-typst}} \
   {{output-dir}}/{{filename}}-{{letter}}-{{language}}.pdf \
-  {{private-args}}
+  {{ if mode == "private" {private-args} else {""} }}
 
-prompt TARGET=cv:
+prompt target=cv:
   mkdir -p {{output-dir}}
   {{pandoc-clean}} \
   {{filename}}-{{letter}}-{{language}}.md \
@@ -62,7 +50,7 @@ prompt TARGET=cv:
   --include-after-body prompt-{{letter}}-{{language}}.md \
   --include-after-body prompt-before-{{job-description}}-{{language}}.md \
   --include-after-body prompt-{{job-description}}-{{language}}.md \
-  --include-after-body prompt-instructions-{{TARGET}}-{{language}}.md \
+  --include-after-body prompt-instructions-{{target}}-{{language}}.md \
   -o {{output-dir}}/prompt-output.md
   rm \
   prompt-{{letter}}-{{language}}.md \
