@@ -22,14 +22,14 @@ build mode="private":
   {{filename}}-{{cv}}-{{language}}.md \
   --include-after-body {{filename}}-after-{{cv}}-{{language}}.md \
   | {{pandoc}} \
-  --include-in-header {{filename}}-{{cv}}-{{language}}.yml \
+  --metadata-file {{filename}}-{{cv}}-{{language}}.yml \
   --template=typst-{{cv}}.typ \
   {{pandoc-to-typst}} \
   {{output-dir}}/{{filename}}-{{cv}}-{{language}}.pdf \
   {{ if mode == "private" {private-args} else {""} }}
   {{pandoc}} \
   {{filename}}-{{letter}}-{{language}}.md \
-  --include-in-header {{filename}}-{{letter}}-{{language}}.yml \
+  --metadata-file {{filename}}-{{letter}}-{{language}}.yml \
   --template=typst-{{letter}}.typ \
   {{pandoc-to-typst}} \
   {{output-dir}}/{{filename}}-{{letter}}-{{language}}.pdf \
